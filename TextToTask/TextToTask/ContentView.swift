@@ -5,7 +5,6 @@
 //  Created by 森田健太 on 2024/10/27.
 //
 import SwiftUI
-import Foundation
 
 struct ContentView: View {
     @EnvironmentObject var taskManager: TaskManager
@@ -15,6 +14,11 @@ struct ContentView: View {
             VStack {
                 CalendarView()
                     .environmentObject(taskManager)
+                
+                // タスク一覧を追加
+                TaskListView()
+                    .environmentObject(taskManager)
+                
                 Spacer()
             }
             .navigationTitle("カレンダー")

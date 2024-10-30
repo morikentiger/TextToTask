@@ -10,26 +10,45 @@
 import SwiftUI
 
 struct TaskListView: View {
-    let tasks: [Task]
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var taskManager: TaskManager
 
     var body: some View {
-        NavigationView {
-            List(tasks) { task in
-                VStack(alignment: .leading) {
-                    Text(task.title)
+        // タスクをソート
+        let sortedTasks = taskManager.tasks.sorted {
+            $0.dueDate < $1.dueDate
+        }
+
+        // 過去のタスクと未来のタスクを分ける
+        let pastTasks = sortedTasks.filter { $0.dueDate < Date() }
+        let futureTasks = sortedTasks.filter { $0.dueDate >= Date() }
+
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                // 過去のタスク
+                if !pastTasks.isEmpty {
+                    Text("過去のタスク")
                         .font(.headline)
-                    Text(task.dueDate, style: .time)
+                        .padding(.top)
+                        .padding(.leading)
+
+                    ForEach(pastTasks.reversed(), id: \.id) { task in
+                        TaskRow(task: task)
+                    }
                 }
-            }
-            .navigationTitle("タスク一覧")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("閉じる") {
-                        dismiss()
+
+                // 未来のタスク
+                if !futureTasks.isEmpty {
+                    Text("今後のタスク")
+                        .font(.headline)
+                        .padding(.top)
+                        .padding(.leading)
+
+                    ForEach(futureTasks, id: \.id) { task in
+                        TaskRow(task: task)
                     }
                 }
             }
         }
+        .padding(.bottom)
     }
 }

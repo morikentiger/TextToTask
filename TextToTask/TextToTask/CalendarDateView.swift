@@ -29,7 +29,7 @@ struct CalendarDateView: View {
                         }
                     }
                     .sheet(isPresented: $showTasks) {
-                        TaskListView(tasks: tasks)
+                        TaskListView()//tasks: tasks)
                     }
             }
         }
