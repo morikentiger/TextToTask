@@ -29,16 +29,18 @@ struct CalendarView: View {
                 }
             }
             .padding()
-
+            
             // 曜日の表示
-            HStack {
-                ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { day in
+            HStack(spacing: 0) {
+                ForEach(0..<7) { index in
+                    let day = ["日", "月", "火", "水", "木", "金", "土"][index]
                     Text(day)
                         .frame(maxWidth: .infinity)
                         .frame(height: 30)
+                        .foregroundColor(headerTextColor(for: index))
                 }
             }
-
+            
             // 日付の表示
             ForEach(weeks, id: \.self) { week in
                 HStack(spacing: 0) {
@@ -49,6 +51,19 @@ struct CalendarView: View {
                     }
                 }
             }
+        }
+    }
+        // 曜日に応じたテキストカラーを返す関数
+    func headerTextColor(for index: Int) -> Color {
+        if index == 0 {
+            // 日曜日
+            return Color.red
+        } else if index == 6 {
+            // 土曜日
+            return Color.blue
+        } else {
+            // 平日
+            return Color.primary
         }
     }
 }

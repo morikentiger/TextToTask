@@ -1,12 +1,3 @@
-//
-//  CalendarDateView.swift
-//  TextToTask
-//
-//  Created by 森田健太 on 2024/10/28.
-//
-
-// CalendarDateView.swift
-
 import SwiftUI
 
 struct CalendarDateView: View {
@@ -25,6 +16,7 @@ struct CalendarDateView: View {
                 // 日付のセル
                 Text(date.dayNumber())
                     .font(.body)
+                    .foregroundColor(textColor(for: date))
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(
@@ -42,5 +34,21 @@ struct CalendarDateView: View {
             }
         }
         .frame(maxWidth: .infinity)
+    }
+
+    // 曜日に応じたテキストカラーを返す関数
+    func textColor(for date: Date) -> Color {
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: date)
+        if weekday == 1 {
+            // 日曜日
+            return Color.red
+        } else if weekday == 7 {
+            // 土曜日
+            return Color.blue
+        } else {
+            // 平日
+            return Color.primary
+        }
     }
 }
