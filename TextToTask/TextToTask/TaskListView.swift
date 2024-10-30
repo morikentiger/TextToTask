@@ -31,8 +31,9 @@ struct TaskListView: View {
                         .padding(.top)
                         .padding(.leading)
 
-                    ForEach(pastTasks.reversed(), id: \.id) { task in
+                    ForEach(pastTasks.reversed()) { task in
                         TaskRow(task: task)
+                            .environmentObject(taskManager)
                     }
                 }
 
@@ -43,8 +44,9 @@ struct TaskListView: View {
                         .padding(.top)
                         .padding(.leading)
 
-                    ForEach(futureTasks, id: \.id) { task in
+                    ForEach(futureTasks) { task in
                         TaskRow(task: task)
+                            .environmentObject(taskManager)
                     }
                 }
             }
