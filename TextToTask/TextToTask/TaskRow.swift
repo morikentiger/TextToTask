@@ -1,11 +1,3 @@
-//
-//  TaskRow.swift
-//  TextToTask
-//
-//  Created by 森田健太 on 2024/10/30.
-//
-
-
 import SwiftUI
 
 struct TaskRow: View {
